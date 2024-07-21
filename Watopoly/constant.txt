@@ -1,0 +1,124 @@
+PROPERTY;
+
+Academic(Building name, Block b, int pc, int ic, int[6] tuition)
+
+AL:     Academic(AL, Arts1, 40, 50, [2,10,30,90,160,250]);
+ML:     Academic(ML, Arts1, 60, 50,[4,20,60,180,320,450]);
+ECH:    Academic(ECH, Arts2, 100, 50,[6,30,90,270,400,550]);
+PAS:    Academic(PAS, Arts2, 100, 50,[6,30,90,270,400,550]);
+HH:     Academic(HH, Arts2, 120, 50,[8,40,100,300,450,600]);
+RCH:    Academic(RCH, Eng, 140, 50,[10,50,150,450,625,750]);
+DWE:    Academic(DWE, Eng, 140, 50,[10,50,150,450,625,750]);
+CPH:    Academic(CPH, Eng, 160, 50,[12,60,180,500,700,900]);
+LHI:    Academic(LHI, Health, 180, 100,[14,70,200,550,750,950]);
+BMH:    Academic(BMH, Health, 180, 100,[14,70,200,550,750,950]);
+OPT:    Academic(OPT, Health, 200, 100,[16,80,220,600,800,1000]);
+EV1:    Academic(EV1, Env, 220, 150,[18,90,250,700,875,1050]);
+EV2:    Academic(EV2, Env, 220, 150,[18,90,250,700,875,1050]);
+EV3:    Academic(EV3, Env, 240, 150,[20,100,300,750,925,1100]);
+PHYS:   Academic(PHYS, Sci1, 260, 150,[22,110,330,800,975,1150]);
+B1:     Academic(B1, Sci1, 260, 150,[22,110,330,800,975,1150]);
+B2:     Academic(B2, Sci1, 280, 150,[24,120,360,850,1025,1200]);
+EIT:    Academic(EIT, Sci2, 300, 200,[26,130,390,900,1100,1275]);
+ESC:    Academic(ESC, Sci2, 300, 200,[26,130,390,900,1100,1275]);
+C2:     Academic(C2, Sci2, 320, 200,[28,150,450,1000,1200,1400]);
+MC:     Academic(MC, Math, 350, 200,[35,175,500,1100,1300,1500]);
+DC:     Academic(CDC, Math, 400, 200,[50,200,600,1400,1700,2000]);
+
+Residence(Building name);
+MKV:    Residence(MKV);
+UWP:    Residence(UWP);
+V1:     Residence(V1);
+REV:    Residence(REV);
+
+Gym(Building name);
+PAC:    Residence(PAC);
+CIF:    Residence(CIF);
+
+========================================================================
+
+NON PROPERTY;
+
+Collect OSAP // pick up 200 unless told otherwise
+event cell
+
+DC Tims Line // If lands -> nothing; other means -> must roll doubles, pay 50, or roll up rim to leave
+// by 3rd turn at Tims Line, player must pay 50 or use a roll
+
+Go to Tims // moves player to DC Tims Line, does not get to collect OSAP (event cell that moves player to a position)
+
+Goose Nesting // attacked by a group of Geese, otherwise, nothing happens (output)
+
+Tuition // pay 300 or 10% of total networth of buildings (!!!track the players networth, money goes to "school" which is the bank)
+// this one is just traced
+
+Co-op Fee // pay $150 to "school" (The Bank)
+// another event cell
+
+SLC // randomly moves player - states the move distance and new square
+// Back 3 ->        1/8
+// Back 2 ->        1/6
+// Back 1 ->        1/6
+// Fwd 3 ->         1/8
+// Fwd 2 ->         1/6
+// Fwd 1 ->         1/6
+// DC Tims Line -> 1/24
+// Collect OSAP -> 1/24
+
+Needles Hall // gains or loses their savings
+// -200 -> 1/18
+// -100 -> 1/9
+//  -50 -> 1/6
+//   25 -> 1/3
+//   50 -> 1/6
+//  100 -> 1/9
+//  200 -> 1/18
+=======================================================================================
+SPECIAL CONCEPT;
+
+Roll Up the Rim // When landing on Needles Hall or SLC, 1% chance of getting this which lets you leave a tims line.
+// have game track number to rolls out, cannot exceed 4 per game 
+
+=======================================================================================
+PLAYERS;
+Must support 6 players (all humans) Must be Unique!
+Name                 -> Char
+Goose                -> G
+GRT bus              -> B
+Tim Hortons Doughnut -> D
+Professor            -> P
+Student              -> S
+money                -> $
+Laptop               -> L
+Pink Tie             -> T
+=======================================================================================
+COMMAND INTERPRETER;
+roll // rolls two dice and moves / take action accordingly
+
+next // if cannot roll move on to next player
+
+trade <name> <gives> <receive> // offer trade to <name> giving/receiving a property or amount of cash
+// PLAYERS MUST HAVE NAME FIELDS
+// CANNOT TRADE MONEY FOR MONEY
+// CAN ONLY TRADE WHEN THERE ARE NO IMPROVEMENTS IN ANY PROPERTY
+// CAN TRADE WHEN STUCK IN DC TIMS LINE 
+
+improve <property> buy/sell // attempt to buy/sell improvement for property
+
+mortgage <property> // attempt to mortgage property
+
+unmortgage <property> // attempt to unmortgage property
+
+bankrupt // declare bankrupt
+// ONLY WHEN PLAYER HAS LESS MONEY THAN THEIR PAYMENT
+
+assets // lists all assets of player, does not work when deciding to pay tuition
+
+all // lists all assets of ALL player (to verify transactions), does not work when deciding to pay tuition
+
+save // saves the game state as described below
+=======================================================================================
+GAMEPLAY;
+
+Figure out when start code 
+
