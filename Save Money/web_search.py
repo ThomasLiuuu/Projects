@@ -1,9 +1,12 @@
-import os 
+import json 
 import requests
 from serpapi import GoogleSearch
 
 # api key for google search
-serpapi_key = "e71cb757d7b42f5fc0575f396a99cce1e33c8abf708fc0b57e0925921e10dbca"
+with open("./config.json", "r") as file:
+    config = json.load(file)
+    serpapi_key = config["serpapi_key"]
+    url = config["bank_of_canada_url"]
 
 # search on Google
 def google_search(query): 
@@ -35,8 +38,6 @@ def google_search(query):
 
 # search for Bank of Canada interest rate 
 def get_interest_rate():
-    url = "https://www.bankofcanada.ca/valet/observations/V39079/json"
-    
     response = requests.get(url)
     if response.status_code != 200:
         print("Failed to fetch data from the Bank of Canada API.")
