@@ -1,13 +1,16 @@
+import json 
 import mysql.connector
 
 # database configuration
-db_config = {
-    "host": "127.0.0.1",
-    "user": "root",
-    "password": "lty040609",
-    "database": "coffee_db",
-    "port": 3306
-}
+with open("./config.json", "r") as file:
+    config = json.load(file)
+    db_config = {
+        "host": config["db_host"],
+        "user": config["db_user"],
+        "password": config["db_password"],
+        "database": config["db_database"],
+        "port": config["db_port"]
+    }
 
 # get coffee price from the database
 def get_coffee_price(coffee_name, brand, size):
