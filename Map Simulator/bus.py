@@ -1,3 +1,7 @@
 import pandas as pd
+import json 
+from sqlalchemy import create_engine
 
-df_stops = pd.read_csv('grt_data/stops.txt')
+with open("./config.json", "r") as file:
+    config = json.load(file)
+    
