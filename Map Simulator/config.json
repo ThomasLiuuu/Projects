@@ -3,5 +3,5 @@
     "db_password": "lty040609",
     "db_host": "localhost",
     "db_port": 5432,
-    "db_database": "transit_system"
+    "db_database": "grt_transit_system"
 }
